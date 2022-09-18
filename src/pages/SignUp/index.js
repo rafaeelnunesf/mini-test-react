@@ -93,7 +93,7 @@ function SignUp() {
         <Button variant="contained" type="submit" sx={{ marginBottom: "16px" }}>
           Sign Up
         </Button>
-        <Link component={RouterLink} to="/login">
+        <Link component={RouterLink} to="/sign-in">
           <Typography>Already have an account? Log in here!</Typography>
         </Link>
       </Box>
