@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Form from "../../components/Form";
 import PasswordInput from "../../components/PasswordInput";
-import api from "../../services/api";
+import useAuth from "../../hooks/useAuth";
 import { styles } from "../../styles/authStyles";
 import useAlert from "../../hooks/useAlert";
 function SignIn() {
@@ -14,6 +14,7 @@ function SignIn() {
     email: "",
     password: "",
   });
+  const { login } = useAuth();
 
   function handleInputChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,7 +32,7 @@ function SignIn() {
     const { email, password } = formData;
 
     try {
-      const user = await api.login({ email, password });
+      const user = await login({ email, password });
       console.log(user);
       navigate("/");
     } catch (error) {

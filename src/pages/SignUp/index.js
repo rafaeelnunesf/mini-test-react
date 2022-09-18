@@ -4,10 +4,9 @@ import { useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Form from "../../components/Form";
 import PasswordInput from "../../components/PasswordInput";
-import api from "../../services/api";
 import { styles } from "../../styles/authStyles";
 import useAlert from "../../hooks/useAlert";
-
+import useAuth from "../../hooks/useAuth";
 function SignUp() {
   const { setMessage } = useAlert();
   const navigate = useNavigate();
@@ -17,6 +16,7 @@ function SignUp() {
     password: "",
     passwordConfirmation: "",
   });
+  const { register } = useAuth();
   function handleInputChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
@@ -41,22 +41,20 @@ function SignUp() {
     }
 
     try {
-      const user = await api.register({ name, email, password });
-      console.log(user);
+      await register({ name, email, password });
       setMessage({
         type: "success",
         text: "Registration successfully Complete!",
       });
       navigate("/");
     } catch (error) {
-      if (error.response) {
-        console.log({
+      if (error.message) {
+        setMessage({
           type: "error",
-          text: error.response.data,
+          text: error.message,
         });
         return;
       }
-      console.dir(error);
       setMessage({
         type: "error",
         text: "Error, try again in a few seconds!",
