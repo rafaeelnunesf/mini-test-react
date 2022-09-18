@@ -5,7 +5,7 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Form from "../../components/Form";
 import PasswordInput from "../../components/PasswordInput";
 import api from "../../services/api";
-import { styles } from "./styles";
+import { styles } from "../../styles/authStyles";
 import useAlert from "../../hooks/useAlert";
 
 function SignUp() {
@@ -45,7 +45,7 @@ function SignUp() {
         type: "success",
         text: "Registration successfully Complete!",
       });
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       if (error.response) {
         console.log({
@@ -54,7 +54,7 @@ function SignUp() {
         });
         return;
       }
-      console.log(error);
+      console.dir(error);
       setMessage({
         type: "error",
         text: "Error, try again in a few seconds!",
