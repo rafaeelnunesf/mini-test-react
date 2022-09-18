@@ -1,12 +1,15 @@
 import { TextField, Typography, Link, Button } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Form from "../../components/Form";
 import PasswordInput from "../../components/PasswordInput";
+import api from "../../services/api";
 import { styles } from "../../styles/authStyles";
-
+import useAlert from "../../hooks/useAlert";
 function SignIn() {
+  const { setMessage } = useAlert();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -15,8 +18,39 @@ function SignIn() {
   function handleInputChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setMessage(null);
+
+    if (!formData?.email || !formData?.password) {
+      setMessage({ type: "error", text: "Todos os campos são obrigatórios!" });
+      return;
+    }
+
+    const { email, password } = formData;
+
+    try {
+      const user = await api.login({ email, password });
+      console.log(user);
+      navigate("/");
+    } catch (error) {
+      if (error.response) {
+        setMessage({
+          type: "error",
+          text: error.response.data,
+        });
+        return;
+      }
+
+      setMessage({
+        type: "error",
+        text: "Erro, tente novamente em alguns segundos!",
+      });
+    }
+  }
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Box sx={styles.container}>
         <Typography sx={styles.title} variant="h4" component="h1">
           Login
