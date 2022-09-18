@@ -6,8 +6,10 @@ import Form from "../../components/Form";
 import PasswordInput from "../../components/PasswordInput";
 import api from "../../services/api";
 import { styles } from "./styles";
+import useAlert from "../../hooks/useAlert";
 
 function SignUp() {
+  const { setMessage } = useAlert();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -25,21 +27,21 @@ function SignUp() {
       !formData?.password ||
       !formData?.passwordConfirmation
     ) {
-      console.log({ type: "error", text: "All fields are mandatory!" });
+      setMessage({ type: "error", text: "All fields are mandatory!" });
       return;
     }
 
     const { email, password, passwordConfirmation } = formData;
 
     if (password !== passwordConfirmation) {
-      console.log({ type: "error", text: "Passwords must be the same!" });
+      setMessage({ type: "error", text: "Passwords must be the same!" });
       return;
     }
 
     try {
       const user = await api.register({ email, password });
       console.log(user);
-      console.log({
+      setMessage({
         type: "success",
         text: "Registration successfully Complete!",
       });
@@ -53,7 +55,7 @@ function SignUp() {
         return;
       }
       console.log(error);
-      console.log({
+      setMessage({
         type: "error",
         text: "Error, try again in a few seconds!",
       });
