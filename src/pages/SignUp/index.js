@@ -12,6 +12,7 @@ function SignUp() {
   const { setMessage } = useAlert();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
     passwordConfirmation: "",
@@ -23,6 +24,7 @@ function SignUp() {
   async function handleSubmit(e) {
     e.preventDefault();
     if (
+      !formData?.name ||
       !formData?.email ||
       !formData?.password ||
       !formData?.passwordConfirmation
@@ -31,7 +33,7 @@ function SignUp() {
       return;
     }
 
-    const { email, password, passwordConfirmation } = formData;
+    const { name, email, password, passwordConfirmation } = formData;
 
     if (password !== passwordConfirmation) {
       setMessage({ type: "error", text: "Passwords must be the same!" });
@@ -39,7 +41,7 @@ function SignUp() {
     }
 
     try {
-      const user = await api.register({ email, password });
+      const user = await api.register({ name, email, password });
       console.log(user);
       setMessage({
         type: "success",
@@ -67,6 +69,15 @@ function SignUp() {
         <Typography sx={styles.title} variant="h4" component="h1">
           Create account
         </Typography>
+        <TextField
+          name="name"
+          sx={styles.input}
+          label="Name"
+          type="text"
+          variant="outlined"
+          onChange={handleInputChange}
+          value={formData.name}
+        />
         <TextField
           name="email"
           sx={styles.input}
