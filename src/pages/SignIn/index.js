@@ -72,7 +72,17 @@ function SignIn() {
           onChange={handleInputChange}
           value={formData.password}
         />
-        <Button variant="contained" type="submit" sx={{ marginBottom: "16px" }}>
+        <Button
+          variant="contained"
+          type="submit"
+          sx={{
+            marginBottom: "16px",
+            backgroundColor: "#000",
+            "&:hover": {
+              backgroundColor: "#333",
+            },
+          }}
+        >
           Log In
         </Button>
         <Link component={RouterLink} to="/sign-up">
