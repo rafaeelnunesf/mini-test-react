@@ -1,7 +1,9 @@
-import { createContext, useState } from "react";
+import { createContext } from "react";
 import { auth } from "../config/firebaseConfig";
 import {
+  browserLocalPersistence,
   createUserWithEmailAndPassword,
+  setPersistence,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
@@ -10,29 +12,24 @@ import {
 export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(auth.currentUser | null);
-
   async function register({ name, email, password }) {
     await createUserWithEmailAndPassword(auth, email, password);
     await updateProfile(auth.currentUser, { displayName: name });
-    setUser(auth.currentUser);
+    await setPersistence(auth, browserLocalPersistence);
   }
 
   async function login({ email, password }) {
     await signInWithEmailAndPassword(auth, email, password);
-    setUser(auth.currentUser);
   }
 
   async function logout() {
-    signOut();
-    setUser(null);
+    await signOut(auth);
   }
 
   return (
     <AuthContext.Provider
       value={{
-        displayName: user.displayName,
-        photoURL: user.photoURL,
+        auth,
         login,
         logout,
         register,
