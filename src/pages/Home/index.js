@@ -1,14 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import { onAuthStateChanged } from "firebase/auth";
+import { useEffect, useState } from "react";
+import Header from "../../components/Header";
 
-import { useEffect } from "react";
 function Home() {
   let navigate = useNavigate();
-  const { logout, displayName } = useAuth();
+  const { logout, auth } = useAuth();
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    if (!displayName) return navigate("/sign-in");
-  }, []);
+    onAuthStateChanged(auth, (user) => {
+      if (!user) return navigate("/sign-in");
+
+      setUser(user);
+    });
+  }, [auth]);
 
   function handleClose() {
     logout();
@@ -17,8 +24,7 @@ function Home() {
 
   return (
     <>
-      <h1>Hello {displayName}</h1>
-      <button onClick={handleClose}>Logout</button>
+      <Header displayName={user?.displayName} logout={handleClose} />
     </>
   );
 }
