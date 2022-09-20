@@ -15,7 +15,7 @@ function Home() {
 
       setUser(user);
     });
-  }, []);
+  }, [auth, navigate]);
 
   function handleClose() {
     logout();
