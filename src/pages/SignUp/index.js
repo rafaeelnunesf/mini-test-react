@@ -1,10 +1,9 @@
-import { TextField, Typography, Link, Button, Divider } from "@mui/material";
+import { TextField, Typography, Link, Button } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Form from "../../components/Form";
 import PasswordInput from "../../components/PasswordInput";
-import { styles } from "../../styles/authStyles";
 import useAlert from "../../hooks/useAlert";
 import useAuth from "../../hooks/useAuth";
 
@@ -12,6 +11,7 @@ import {
   GoogleLoginButton,
   GithubLoginButton,
 } from "react-social-login-buttons";
+import Divider from "../../components/Divider";
 import Container from "../../components/Container";
 function SignUp() {
   const { setMessage } = useAlert();
@@ -114,13 +114,7 @@ function SignUp() {
           <GoogleLoginButton onClick={handleGoogleLogin} />
           <GithubLoginButton onClick={handleGithubLogin} />
         </Box>
-        <Box sx={styles.dividerContainer}>
-          <Divider sx={{ flex: "1" }} />
-          <Typography variant="caption" component="span">
-            OR
-          </Typography>
-          <Divider sx={{ flex: "1" }} />
-        </Box>
+        <Divider />
         <TextField
           name="name"
           sx={{ marginBottom: "16px" }}

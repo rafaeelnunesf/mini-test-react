@@ -5,12 +5,12 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Form from "../../components/Form";
 import PasswordInput from "../../components/PasswordInput";
 import useAuth from "../../hooks/useAuth";
-import { styles } from "../../styles/authStyles";
 import useAlert from "../../hooks/useAlert";
 import {
   GoogleLoginButton,
   GithubLoginButton,
 } from "react-social-login-buttons";
+import Divider from "../../components/Divider";
 import Container from "../../components/Container";
 
 function SignIn() {
@@ -103,13 +103,7 @@ function SignIn() {
           <GoogleLoginButton onClick={handleGoogleLogin} />
           <GithubLoginButton onClick={handleGithubLogin} />
         </Box>
-        <Box sx={styles.dividerContainer}>
-          <Divider sx={{ flex: "1" }} />
-          <Typography variant="caption" component="span">
-            OR
-          </Typography>
-          <Divider sx={{ flex: "1" }} />
-        </Box>
+        <Divider />
         <TextField
           name="email"
           sx={{ marginBottom: "16px" }}
