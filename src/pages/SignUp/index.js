@@ -22,7 +22,7 @@ function SignUp() {
     password: "",
     passwordConfirmation: "",
   });
-  const { register, googleLogin } = useAuth();
+  const { register, googleLogin, githubLogin } = useAuth();
   function handleInputChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
@@ -80,9 +80,21 @@ function SignUp() {
         return;
       }
 
+  async function handleGithubLogin() {
+    try {
+      await githubLogin();
+      navigate("/");
+    } catch (error) {
+      if (error.message) {
       setMessage({
         type: "error",
-        text: "Erro, tente novamente em alguns segundos!",
+          text: error.message,
+        });
+        return;
+      }
+      setMessage({
+        type: "error",
+        text: "Error, try again in a few seconds!",
       });
     }
   }

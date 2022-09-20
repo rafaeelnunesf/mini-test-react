@@ -9,6 +9,7 @@ import {
   updateProfile,
   signInWithPopup,
   GoogleAuthProvider,
+  GithubAuthProvider,
 } from "firebase/auth";
 
 export const AuthContext = createContext(null);
@@ -34,6 +35,13 @@ export function AuthProvider({ children }) {
     return user;
   }
 
+  async function githubLogin() {
+    const provider = new GithubAuthProvider();
+    const { user } = await signInWithPopup(auth, provider);
+    return user;
+    // TODO handle de error auth/account-exists-with-different-credential
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -42,6 +50,7 @@ export function AuthProvider({ children }) {
         logout,
         register,
         googleLogin,
+        githubLogin,
       }}
     >
       {children}
