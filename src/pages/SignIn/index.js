@@ -7,7 +7,10 @@ import PasswordInput from "../../components/PasswordInput";
 import useAuth from "../../hooks/useAuth";
 import { styles } from "../../styles/authStyles";
 import useAlert from "../../hooks/useAlert";
-import google from "../../assets/google_signin_buttons/web/1x/btn_google_signin_light_normal_web.png";
+import {
+  GoogleLoginButton,
+  GithubLoginButton,
+} from "react-social-login-buttons";
 
 function SignIn() {
   const { setMessage } = useAlert();
@@ -77,12 +80,9 @@ function SignIn() {
         <Typography sx={styles.title} variant="h4" component="h1">
           Login
         </Typography>
-        <Box sx={{ cursor: "pointer" }}>
-          <img
-            src={google}
-            onClick={handleGoogleLogin}
-            alt="Sign-In with Google"
-          />
+        <Box sx={{ display: { md: "flex" } }}>
+          <GoogleLoginButton onClick={handleGoogleLogin} />
+          <GithubLoginButton onClick={handleGithubLogin} />
         </Box>
         <Box sx={styles.dividerContainer}>
           <Divider sx={{ flex: "1" }} />

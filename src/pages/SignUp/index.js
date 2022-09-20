@@ -9,6 +9,10 @@ import useAlert from "../../hooks/useAlert";
 import useAuth from "../../hooks/useAuth";
 import google from "../../assets/google_signin_buttons/web/1x/btn_google_signin_light_normal_web.png";
 
+import {
+  GoogleLoginButton,
+  GithubLoginButton,
+} from "react-social-login-buttons";
 function SignUp() {
   const { setMessage } = useAlert();
   const navigate = useNavigate();
@@ -88,12 +92,9 @@ function SignUp() {
         <Typography sx={styles.title} variant="h4" component="h1">
           Create account
         </Typography>
-        <Box sx={{ cursor: "pointer" }}>
-          <img
-            src={google}
-            onClick={handleGoogleLogin}
-            alt="Sign-In with Google"
-          />
+        <Box sx={{ display: { md: "flex" } }}>
+          <GoogleLoginButton onClick={handleGoogleLogin} />
+          <GithubLoginButton onClick={handleGithubLogin} />
         </Box>
         <Box sx={styles.dividerContainer}>
           <Divider sx={{ flex: "1" }} />
