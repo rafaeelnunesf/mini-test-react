@@ -15,16 +15,15 @@ function Home() {
 
       setUser(user);
     });
-  }, [auth]);
+  }, []);
 
   function handleClose() {
     logout();
     navigate("/sign-in");
   }
-
   return (
     <>
-      <Header displayName={user?.displayName} logout={handleClose} />
+      <Header user={user} logout={handleClose} />
     </>
   );
 }

@@ -16,7 +16,7 @@ import NavMenu from "./NavMenu";
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard"];
 
-function Header({ displayName, logout }) {
+function Header({ user, logout }) {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   let navigate = useNavigate();
@@ -59,7 +59,7 @@ function Header({ displayName, logout }) {
             onClick={() => navigate("/")}
             sx={[styles.typography, { display: { xs: "none", md: "flex" } }]}
           >
-            Hi {displayName}!
+            Hi {user?.displayName}!
           </Typography>
 
           <NavMenu>
@@ -77,7 +77,7 @@ function Header({ displayName, logout }) {
               { display: { xs: "flex", md: "none", flexGrow: 1 } },
             ]}
           >
-            Hi {displayName}!
+            Hi {user?.displayName}!
           </Typography>
           <Box sx={styles.web.box}>
             {pages.map((page) => (
@@ -94,7 +94,7 @@ function Header({ displayName, logout }) {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="user photoURL" src={user?.photoURL} />
               </IconButton>
             </Tooltip>
             <Menu
