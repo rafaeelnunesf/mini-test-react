@@ -1,4 +1,4 @@
-import { TextField, Typography, Link, Button, Divider } from "@mui/material";
+import { TextField, Typography, Link, Button } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ import {
   GoogleLoginButton,
   GithubLoginButton,
 } from "react-social-login-buttons";
+import Container from "../../components/Container";
 
 function SignIn() {
   const { setMessage } = useAlert();
@@ -94,8 +95,8 @@ function SignIn() {
   }
   return (
     <Form onSubmit={handleSubmit}>
-      <Box sx={styles.container}>
-        <Typography sx={styles.title} variant="h4" component="h1">
+      <Container>
+        <Typography sx={{ marginBottom: "30px" }} variant="h4" component="h1">
           Login
         </Typography>
         <Box sx={{ display: { md: "flex" } }}>
@@ -111,7 +112,7 @@ function SignIn() {
         </Box>
         <TextField
           name="email"
-          sx={styles.input}
+          sx={{ marginBottom: "16px" }}
           label="Email"
           type="email"
           variant="outlined"
@@ -120,7 +121,7 @@ function SignIn() {
         />
         <PasswordInput
           name="password"
-          sx={styles.input}
+          sx={{ marginBottom: "16px" }}
           label="Password"
           onChange={handleInputChange}
           value={formData.password}
@@ -141,7 +142,7 @@ function SignIn() {
         <Link component={RouterLink} to="/sign-up">
           <Typography>I don't have an account!</Typography>
         </Link>
-      </Box>
+      </Container>
     </Form>
   );
 }

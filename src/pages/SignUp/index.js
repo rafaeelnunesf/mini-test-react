@@ -12,6 +12,7 @@ import {
   GoogleLoginButton,
   GithubLoginButton,
 } from "react-social-login-buttons";
+import Container from "../../components/Container";
 function SignUp() {
   const { setMessage } = useAlert();
   const navigate = useNavigate();
@@ -105,8 +106,8 @@ function SignUp() {
   }
   return (
     <Form onSubmit={handleSubmit}>
-      <Box sx={styles.container}>
-        <Typography sx={styles.title} variant="h4" component="h1">
+      <Container>
+        <Typography sx={{ marginBottom: "30px" }} variant="h4" component="h1">
           Create account
         </Typography>
         <Box sx={{ display: { md: "flex" } }}>
@@ -122,7 +123,7 @@ function SignUp() {
         </Box>
         <TextField
           name="name"
-          sx={styles.input}
+          sx={{ marginBottom: "16px" }}
           label="Name"
           type="text"
           variant="outlined"
@@ -131,7 +132,7 @@ function SignUp() {
         />
         <TextField
           name="email"
-          sx={styles.input}
+          sx={{ marginBottom: "16px" }}
           label="Email"
           type="email"
           variant="outlined"
@@ -140,14 +141,14 @@ function SignUp() {
         />
         <PasswordInput
           name="password"
-          sx={styles.input}
+          sx={{ marginBottom: "16px" }}
           label="Password"
           onChange={handleInputChange}
           value={formData.password}
         />
         <PasswordInput
           name="passwordConfirmation"
-          sx={styles.input}
+          sx={{ marginBottom: "16px" }}
           label="Confirm your password"
           onChange={handleInputChange}
           value={formData.passwordConfirmation}
@@ -168,7 +169,7 @@ function SignUp() {
         <Link component={RouterLink} to="/sign-in">
           <Typography>Already have an account? Log in here!</Typography>
         </Link>
-      </Box>
+      </Container>
     </Form>
   );
 }
