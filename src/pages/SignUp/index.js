@@ -7,7 +7,6 @@ import PasswordInput from "../../components/PasswordInput";
 import { styles } from "../../styles/authStyles";
 import useAlert from "../../hooks/useAlert";
 import useAuth from "../../hooks/useAuth";
-import google from "../../assets/google_signin_buttons/web/1x/btn_google_signin_light_normal_web.png";
 
 import {
   GoogleLoginButton,
@@ -72,13 +71,19 @@ function SignUp() {
       await googleLogin();
       navigate("/");
     } catch (error) {
-      if (error.response) {
+      if (error.message) {
         setMessage({
           type: "error",
-          text: error.response.data,
+          text: error.message,
         });
         return;
       }
+      setMessage({
+        type: "error",
+        text: "Error, try again in a few seconds!",
+      });
+    }
+  }
 
   async function handleGithubLogin() {
     try {
@@ -86,8 +91,8 @@ function SignUp() {
       navigate("/");
     } catch (error) {
       if (error.message) {
-      setMessage({
-        type: "error",
+        setMessage({
+          type: "error",
           text: error.message,
         });
         return;

@@ -60,13 +60,19 @@ function SignIn() {
       await googleLogin();
       navigate("/");
     } catch (error) {
-      if (error.response) {
+      if (error.message) {
         setMessage({
           type: "error",
-          text: error.response.data,
+          text: error.message,
         });
         return;
       }
+      setMessage({
+        type: "error",
+        text: "Error, try again in a few seconds!",
+      });
+    }
+  }
 
   async function handleGithubLogin() {
     try {
@@ -74,8 +80,8 @@ function SignIn() {
       navigate("/");
     } catch (error) {
       if (error.message) {
-      setMessage({
-        type: "error",
+        setMessage({
+          type: "error",
           text: error.message,
         });
         return;
