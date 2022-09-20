@@ -7,6 +7,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from "firebase/auth";
 
 export const AuthContext = createContext(null);
@@ -26,6 +28,12 @@ export function AuthProvider({ children }) {
     await signOut(auth);
   }
 
+  async function googleLogin() {
+    const provider = new GoogleAuthProvider();
+    const { user } = await signInWithPopup(auth, provider);
+    return user;
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -33,6 +41,7 @@ export function AuthProvider({ children }) {
         login,
         logout,
         register,
+        googleLogin,
       }}
     >
       {children}

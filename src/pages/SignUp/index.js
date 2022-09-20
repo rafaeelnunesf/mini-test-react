@@ -1,4 +1,4 @@
-import { TextField, Typography, Link, Button } from "@mui/material";
+import { TextField, Typography, Link, Button, Divider } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
@@ -7,6 +7,7 @@ import PasswordInput from "../../components/PasswordInput";
 import { styles } from "../../styles/authStyles";
 import useAlert from "../../hooks/useAlert";
 import useAuth from "../../hooks/useAuth";
+import google from "../../assets/google_signin_buttons/web/1x/btn_google_signin_light_normal_web.png";
 
 function SignUp() {
   const { setMessage } = useAlert();
@@ -17,7 +18,7 @@ function SignUp() {
     password: "",
     passwordConfirmation: "",
   });
-  const { register } = useAuth();
+  const { register, googleLogin } = useAuth();
   function handleInputChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
@@ -62,12 +63,45 @@ function SignUp() {
       });
     }
   }
+  async function handleGoogleLogin() {
+    try {
+      await googleLogin();
+      navigate("/");
+    } catch (error) {
+      if (error.response) {
+        setMessage({
+          type: "error",
+          text: error.response.data,
+        });
+        return;
+      }
+
+      setMessage({
+        type: "error",
+        text: "Erro, tente novamente em alguns segundos!",
+      });
+    }
+  }
   return (
     <Form onSubmit={handleSubmit}>
       <Box sx={styles.container}>
         <Typography sx={styles.title} variant="h4" component="h1">
           Create account
         </Typography>
+        <Box sx={{ cursor: "pointer" }}>
+          <img
+            src={google}
+            onClick={handleGoogleLogin}
+            alt="Sign-In with Google"
+          />
+        </Box>
+        <Box sx={styles.dividerContainer}>
+          <Divider sx={{ flex: "1" }} />
+          <Typography variant="caption" component="span">
+            OR
+          </Typography>
+          <Divider sx={{ flex: "1" }} />
+        </Box>
         <TextField
           name="name"
           sx={styles.input}
